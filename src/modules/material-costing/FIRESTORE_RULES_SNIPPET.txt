@@ -1,0 +1,9 @@
+// Add inside: match /databases/{database}/documents { ... }
+
+match /admin_costing_settings/{document=**} {
+  allow read, write: if request.auth != null &&
+    (
+      request.auth.token.role == 'admin' ||
+      get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+    );
+}

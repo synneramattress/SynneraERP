@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #0f766e;
+  --accent: #d97706;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+}
+
+
+/* Party dashboard announcements */
+.announcement-marquee {
+  display: inline-block;
+  min-width: max-content;
+  animation: synnera-announcement-marquee 18s linear infinite;
+}
+
+@keyframes synnera-announcement-marquee {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .announcement-marquee {
+    animation: none;
+    white-space: normal;
+  }
+}
+
+html, body { overflow-x: hidden; max-width: 100vw; }
+
+/* Invoice print — hide chrome only; keep invoice in normal flow (no blank page) */
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  html, body {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide app chrome explicitly (avoid body * visibility — causes blank pages) */
+  nav,
+  header,
+  aside,
+  footer.app-footer,
+  [data-print-hide="true"],
+  [data-testid="app-header"],
+  [data-testid="app-bottom-nav"],
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Invoice document: normal flow, full width */
+  #invoice-document {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+
+  #invoice-document img {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    max-height: 56px !important;
+  }
+
+  #invoice-document table {
+    page-break-inside: auto;
+  }
+  #invoice-document tr {
+    page-break-inside: avoid;
+  }
+  #invoice-document footer,
+  #invoice-document section {
+    page-break-inside: avoid;
+  }
+
+  #statement-print-root {
+    box-shadow: none !important;
+    border: none !important;
+  }
+  #statement-print-root table {
+    page-break-inside: auto;
+  }
+  #statement-print-root tr {
+    page-break-inside: avoid;
+  }
+}
+
+

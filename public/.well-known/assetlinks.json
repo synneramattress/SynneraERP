@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.synnera.app.twa",
+    "sha256_cert_fingerprints": ["72:E8:9A:D7:64:41:E3:92:2A:45:68:DA:4B:9E:94:02:50:91:A2:83:9B:4F:3E:26:80:72:95:84:DD:38:27:62"]
+  }
+}]

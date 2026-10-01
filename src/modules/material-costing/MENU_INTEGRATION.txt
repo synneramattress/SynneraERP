@@ -1,0 +1,10 @@
+Add to Admin sidebar / menu (Option C – single item):
+
+Label: Material Costing
+Href:  /admin/material-costing
+Icon:  Calculator or IndianRupee (lucide)
+
+Also add page title in admin layout pageTitle():
+  if (pathname.startsings("/admin/material-costing")) return "Material Costing";
+
+Optional: add link under More menu on mobile.

@@ -1,0 +1,28 @@
+// Delivery Challan rules — merge into firestore.rules
+// Collection: deliveryChallans
+// Counters: counters/deliveryChallan_{FY}
+
+    match /deliveryChallans/{challanId} {
+      allow read: if isSignedIn() && (
+        isAdmin() ||
+        isEmployee() ||
+        (isParty() && resource.data.partyId == request.auth.uid)
+      );
+      allow create: if isSignedIn() && (isAdmin() || isEmployee());
+      allow update: if isSignedIn() && (
+        isAdmin() ||
+        isEmployee() ||
+        // Party may only upload POD fields (signed image) on own DC
+        (isParty() &&
+          resource.data.partyId == request.auth.uid &&
+          request.resource.data.partyId == resource.data.partyId &&
+          request.resource.data.challanNumber == resource.data.challanNumber &&
+          request.resource.data.items == resource.data.items &&
+          request.resource.data.totalAmount == resource.data.totalAmount)
+      );
+      allow delete: if false;
+    }
+
+// Note: create composite index if needed:
+// deliveryChallans: partyId ASC, createdAt DESC
+// deliveryChallans: orderId ASC, createdAt DESC

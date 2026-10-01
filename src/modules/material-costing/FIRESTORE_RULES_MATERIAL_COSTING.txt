@@ -1,0 +1,21 @@
+================================================================================
+SYNNERA – Firestore Rules for Material Costing
+Add inside: match /databases/{database}/documents { ... }
+================================================================================
+
+// Material Costing – Master Raw Material Rates (Admin only)
+match /admin_costing_settings/{document=**} {
+  allow read, write: if request.auth != null &&
+    (
+      request.auth.token.role == 'admin' ||
+      get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+    );
+}
+
+================================================================================
+NOTES
+================================================================================
+- Document path used by the app: admin_costing_settings/master_rates
+- Only users with role "admin" can read or write
+- Calculator page and Master Rates page both require admin
+================================================================================
